@@ -1,4 +1,4 @@
-# Alex Chen — AI Engineer Portfolio
+# Sumit Prajapati — AI Engineer Portfolio
 
 A modern, dark-themed, multi-page portfolio website built for an AI Engineering student. Features smooth animations, particle backgrounds, responsive design, and a bubbly UI with generous whitespace.
 
@@ -80,12 +80,12 @@ Open each HTML file and find:
 <!-- Logo -->
 <a href="portfolio.html" class="logo">
     <div class="logo-dot"></div>
-    alex.dev          <!-- Change this -->
+    sumitmitraa          <!-- Change this -->
 </a>
 
 <!-- Hero Name -->
 <h1>Building <span class="gradient-text">Intelligent</span><br>Systems That Matter</h1>
-<p>I'm <strong>Alex Chen</strong>, an AI Engineering student...  <!-- Change name -->
+<p>I'm <strong>Sumit Prajapati</strong>, an AI Engineering student...  <!-- Change name -->
 ```
 
 ### 2. Update Contact Information

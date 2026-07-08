@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Alex Chen — AI Engineer Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --bg-elevated: #12121a;
+            --surface: #1a1a25;
+            --surface-hover: #22222f;
+            --text: #f0f0f5;
+            --text-muted: #8890a4;
+            --accent: #a78bfa;
+            --accent-glow: rgba(167, 139, 250, 0.15);
+            --accent-bright: #c4b5fd;
+            --border: rgba(255, 255, 255, 0.06);
+            --border-hover: rgba(167, 139, 250, 0.2);
+            --radius-sm: 16px;
+            --radius: 24px;
+            --radius-lg: 32px;
+            --radius-pill: 9999px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--surface); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+        #particles-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 20px 0;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px) saturate(1.5);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 14px 0;
+            background: rgba(10, 10, 15, 0.95);
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-dot {
+            width: 10px; height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--accent);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.2); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 4px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            padding: 10px 24px;
+            background: var(--accent);
+            color: var(--bg);
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(167, 139, 250, 0.4);
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+        }
+
+        .mobile-toggle:hover { background: var(--surface); }
+
+        /* Page Header */
+        .page-header {
+            min-height: 45vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 160px 24px 80px;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .page-header-glow {
+            position: absolute;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            top: 20%; left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+            animation: float-glow 8s ease-in-out infinite;
+        }
+
+        @keyframes float-glow {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.15); }
+        }
+
+        .page-header-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+
+        .page-header .section-tag {
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .page-header h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .page-header h1 .gradient-text {
+            background: linear-gradient(135deg, var(--accent), var(--accent-bright), #e9d5ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            max-width: 560px;
+            margin: 0 auto;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 32px;
+            animation: fadeInUp 0.8s ease 0.8s both;
+        }
+
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover { color: var(--accent); }
+
+        .breadcrumb span {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Sections */
+        section { padding: 80px 0; position: relative; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        .section-tag {
+            display: inline-block;
+            padding: 6px 16px;
+            background: var(--accent-glow);
+            border: 1px solid var(--border-hover);
+            border-radius: var(--radius-pill);
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Contact Grid */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        /* Contact Info Side */
+        .contact-info-side {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .info-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--border-hover);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .info-card:hover::before { opacity: 1; }
+
+        .info-card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .info-icon-wrap {
+            width: 56px; height: 56px;
+            background: linear-gradient(135deg, var(--accent-glow), rgba(139, 92, 246, 0.1));
+            border: 1px solid var(--border-hover);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover .info-icon-wrap {
+            transform: scale(1.1) rotate(-5deg);
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+        }
+
+        .info-card-header h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .info-card-header span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .info-card p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .info-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: gap 0.3s ease;
+        }
+
+        .info-link:hover {
+            gap: 12px;
+        }
+
+        /* Availability Badge */
+        .availability-card {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            border-radius: var(--radius);
+            padding: 28px 32px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .availability-dot {
+            width: 12px; height: 12px;
+            background: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.5);
+            animation: pulse-green 2s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes pulse-green {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.3); }
+        }
+
+        .availability-text strong {
+            display: block;
+            font-size: 1rem;
+            color: #22c55e;
+            margin-bottom: 4px;
+        }
+
+        .availability-text span {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Social Links */
+        .social-section {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px;
+        }
+
+        .social-section h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            border-color: var(--border-hover);
+            transform: translateX(6px);
+            background: var(--surface-hover);
+        }
+
+        .social-link .s-icon {
+            width: 40px; height: 40px;
+            background: var(--accent-glow);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover .s-icon {
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+        }
+
+        .social-link .s-text strong {
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 2px;
+        }
+
+        .social-link .s-text span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Contact Form Side */
+        .form-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-card::before {
+            content: '';
+            position: absolute;
+            top: -150px; right: -150px;
+            width: 350px; height: 350px;
+            background: var(--accent-glow);
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.5;
+        }
+
+        .form-card::after {
+            content: '';
+            position: absolute;
+            bottom: -100px; left: -100px;
+            width: 250px; height: 250px;
+            background: rgba(139, 92, 246, 0.08);
+            border-radius: 50%;
+            filter: blur(80px);
+        }
+
+        .form-header {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 36px;
+        }
+
+        .form-header h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        .form-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .contact-form {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 18px 20px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            outline: none;
+            appearance: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .form-group textarea {
+            min-height: 160px;
+            resize: vertical;
+        }
+
+        .form-group select {
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%238890a4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 18px;
+            padding-right: 48px;
+        }
+
+        .form-group label {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            background: var(--bg-elevated);
+            padding: 0 6px;
+        }
+
+        .form-group textarea + label {
+            top: 28px;
+            transform: translateY(0);
+        }
+
+        .form-group select + label {
+            top: 0;
+            transform: translateY(-50%);
+            font-size: 0.75rem;
+            color: var(--accent);
+        }
+
+        .form-group input:focus + label,
+        .form-group input:not(:placeholder-shown) + label,
+        .form-group textarea:focus + label,
+        .form-group textarea:not(:placeholder-shown) + label {
+            top: 0;
+            transform: translateY(-50%);
+            font-size: 0.75rem;
+            color: var(--accent);
+        }
+
+        .form-group textarea:focus + label,
+        .form-group textarea:not(:placeholder-shown) + label {
+            top: 0;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-submit.sent {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+        }
+
+        /* FAQ Section */
+        .faq-section { background: var(--bg-elevated); }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--border-hover);
+        }
+
+        .faq-question {
+            padding: 24px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            padding-right: 16px;
+        }
+
+        .faq-icon {
+            width: 32px; height: 32px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--accent);
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item.open .faq-icon {
+            transform: rotate(45deg);
+            background: var(--accent-glow);
+            border-color: var(--accent);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 200px;
+            padding: 0 28px 24px;
+        }
+
+        .faq-answer p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        /* Map Placeholder */
+        .map-section {
+            padding: 0 0 100px;
+        }
+
+        .map-placeholder {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-placeholder::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                linear-gradient(90deg, var(--border) 1px, transparent 1px),
+                linear-gradient(var(--border) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.3;
+        }
+
+        .map-placeholder span {
+            font-size: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .map-placeholder p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .map-placeholder small {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            opacity: 0.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 24px 30px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .footer-brand {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 12px;
+        }
+
+        .footer-socials a {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-socials a:hover {
+            background: var(--accent-glow);
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-4px) rotate(10deg);
+        }
+
+        .footer-bottom {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            padding-top: 30px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Back to Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px; height: 50px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(167, 139, 250, 0.3);
+        }
+
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .contact-grid { grid-template-columns: 1fr; gap: 50px; }
+            .faq-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-toggle { display: block; }
+            .page-header h1 { font-size: 2.2rem; }
+            .form-card { padding: 32px 24px; }
+            .social-grid { grid-template-columns: 1fr; }
+            .map-placeholder { height: 300px; }
+            section { padding: 60px 0; }
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0; right: -100%;
+            width: 80%; max-width: 300px;
+            height: 100vh;
+            background: var(--bg-elevated);
+            border-left: 1px solid var(--border);
+            z-index: 1001;
+            padding: 100px 40px 40px;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .mobile-menu.open { right: 0; }
+
+        .mobile-menu a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            transition: color 0.3s ease;
+        }
+
+        .mobile-menu a:hover { color: var(--accent); }
+
+        .mobile-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .mobile-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-close {
+            position: absolute;
+            top: 24px; right: 24px;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Particles Canvas -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-inner">
+            <a target="_self" href="index.html" class="logo">
+                <div class="logo-dot"></div>
+                sumitmitraa
+            </a>
+            <ul class="nav-links">
+                <li><a target="_self" href="about.html">About</a></li>
+                <li><a target="_self"  href="skills.html">Skills</a></li>
+                <li><a target="_self" href="projects.html">Projects</a></li>
+                <li><a target="_self" href="contact.html" class="active">Contact</a></li>
+                <!-- <li><a href="myResume.pdf" download class="nav-cta">Resume</a></li> -->
+            </ul>
+            <button class="mobile-toggle" onclick="toggleMobileMenu()">☰</button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-close" onclick="toggleMobileMenu()">✕</button>
+        <a target="_self" href="about.html" onclick="toggleMobileMenu()">About</a>
+        <a target="_self" href="skills.html" onclick="toggleMobileMenu()">Skills</a>
+        <a target="_self" href="projects.html" onclick="toggleMobileMenu()">Projects</a>
+        <a target="_self" href="contact.html" onclick="toggleMobileMenu()">Contact</a>
+    </div>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="page-header-glow"></div>
+        <div class="page-header-inner">
+            <span class="section-tag">Get in Touch</span>
+            <h1>Let's Start a <span class="gradient-text">Conversation</span></h1>
+            <p>Have a project idea, research collaboration, or just want to talk AI? I'd love to hear from you.</p>
+            <div class="breadcrumb">
+                <a href="portfolio.html">Home</a>
+                <span>/</span>
+                <a href="contact.html" style="color: var(--accent);">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contact Section -->
+    <section style="padding-top: 40px;">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Left Side: Info -->
+                <div class="contact-info-side">
+                    <!-- Availability -->
+                    <div class="availability-card reveal">
+                        <div class="availability-dot"></div>
+                        <div class="availability-text">
+                            <strong>Available for Work</strong>
+                            <span>Open to internships, freelance & collaborations</span>
+                        </div>
+                    </div>
+
+                    <!-- Email Card -->
+                    <div class="info-card reveal reveal-delay-1">
+                        <div class="info-card-header">
+                            <div class="info-icon-wrap">📧</div>
+                            <div>
+                                <h3>Email Me</h3>
+                                <span>Response within 24 hours</span>
+                            </div>
+                        </div>
+                        <p>For project inquiries, collaborations, or just to say hello. I read every email personally.</p>
+                        <a href="mailto:alex@example.com" class="info-link">alex@example.com →</a>
+                    </div>
+
+                    <!-- Location Card -->
+                    <div class="info-card reveal reveal-delay-2">
+                        <div class="info-card-header">
+                            <div class="info-icon-wrap">📍</div>
+                            <div>
+                                <h3>Based In</h3>
+                                <span>San Francisco Bay Area</span>
+                            </div>
+                        </div>
+                        <p>Available for remote work worldwide and in-person meetings in the Bay Area.</p>
+                        <span class="info-link" style="color: var(--text-muted); cursor: default;">PST (UTC-8) Timezone</span>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="social-section reveal reveal-delay-3">
+                        <h3>Find Me Online</h3>
+                        <div class="social-grid">
+                            <a href="#" class="social-link">
+                                <div class="s-icon">G</div>
+                                <div class="s-text">
+                                    <strong>GitHub</strong>
+                                    <span>@alexchen</span>
+                                </div>
+                            </a>
+                            <a href="#" class="social-link">
+                                <div class="s-icon">L</div>
+                                <div class="s-text">
+                                    <strong>LinkedIn</strong>
+                                    <span>/in/alex-chen</span>
+                                </div>
+                            </a>
+                            <a href="#" class="social-link">
+                                <div class="s-icon">T</div>
+                                <div class="s-text">
+                                    <strong>Twitter / X</strong>
+                                    <span>@alex_chen_ai</span>
+                                </div>
+                            </a>
+                            <a href="#" class="social-link">
+                                <div class="s-icon">K</div>
+                                <div class="s-text">
+                                    <strong>Kaggle</strong>
+                                    <span>@alexchen</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side: Form -->
+                <div class="form-card reveal">
+                    <div class="form-header">
+                        <h2>Send a Message</h2>
+                        <p>Fill out the form below and I'll get back to you as soon as possible.</p>
+                    </div>
+                    <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" id="firstName" placeholder=" " required>
+                                <label for="firstName">First Name</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="lastName" placeholder=" " required>
+                                <label for="lastName">Last Name</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" placeholder=" " required>
+                            <label for="email">Email Address</label>
+                        </div>
+                        <div class="form-group">
+                            <select id="subject" required>
+                                <option value="" disabled selected></option>
+                                <option value="project">Project Collaboration</option>
+                                <option value="internship">Internship Opportunity</option>
+                                <option value="research">Research Collaboration</option>
+                                <option value="consulting">Consulting</option>
+                                <option value="other">Something Else</option>
+                            </select>
+                            <label for="subject">What's this about?</label>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" placeholder=" " required></textarea>
+                            <label for="message">Tell me about your project or idea...</label>
+                        </div>
+                        <button type="submit" class="btn-submit" id="submitBtn">
+                            <span>Send Message</span>
+                            <span>→</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Placeholder -->
+    <section class="map-section">
+        <div class="container">
+            <div class="map-placeholder reveal">
+                <span>🗺️</span>
+                <p>San Francisco, California</p>
+                <small>Replace with Google Maps or Leaflet embed</small>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">FAQ</span>
+                <h2>Common Questions</h2>
+                <p>Quick answers to things people usually ask</p>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item reveal">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h4>What type of projects do you take on?</h4>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>I focus on AI/ML projects including NLP, computer vision, LLM applications, and MLOps. I love challenging problems that push the boundaries of what's possible with AI.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal reveal-delay-1">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h4>Are you available for full-time roles?</h4>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>I'm currently open to internships and part-time consulting while completing my Master's. Full-time roles starting Summer 2025.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal reveal-delay-2">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h4>What is your typical project timeline?</h4>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>It depends on scope. A prototype MVP usually takes 2-4 weeks. Full production systems with MLOps can take 2-3 months. I always provide detailed timelines upfront.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal reveal-delay-3">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h4>Do you work with international clients?</h4>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! I work remotely with clients worldwide. I'm flexible with timezones and use async communication tools to keep projects moving smoothly.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h4>Can you sign an NDA before discussing my idea?</h4>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, I'm happy to sign an NDA. I take confidentiality seriously and have experience working with sensitive data and proprietary algorithms.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal reveal-delay-1">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h4>What technologies do you specialize in?</h4>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>PyTorch, TensorFlow, Hugging Face, LangChain, FastAPI, Docker, AWS, and various cloud platforms. I choose the best tool for each specific problem.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-top">
+                <a href="portfolio.html" class="footer-brand">alex.dev</a>
+                <div class="footer-socials">
+                    <a href="#" title="GitHub">G</a>
+                    <a href="#" title="LinkedIn">L</a>
+                    <a href="#" title="Twitter">T</a>
+                    <a href="#" title="Kaggle">K</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p> Alex Chen. Crafted with passion, curiosity, and lots of coffee.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
+
+    <script>
+        // ===== PARTICLES =====
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2 + 1;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(167, 139, 250, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 60; i++) particles.push(new Particle());
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(167, 139, 250, ${0.1 * (1 - dist / 150)})`;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // ===== FAQ TOGGLE =====
+        function toggleFaq(element) {
+            const item = element.parentElement;
+            const isOpen = item.classList.contains('open');
+
+            // Close all others
+            document.querySelectorAll('.faq-item').forEach(faq => faq.classList.remove('open'));
+
+            // Toggle current
+            if (!isOpen) {
+                item.classList.add('open');
+            }
+        }
+
+        // ===== FORM SUBMIT =====
+        function handleSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const originalHTML = btn.innerHTML;
+
+            btn.classList.add('sent');
+            btn.innerHTML = '<span>✓ Message Sent!</span>';
+
+            setTimeout(() => {
+                btn.classList.remove('sent');
+                btn.innerHTML = originalHTML;
+                e.target.reset();
+            }, 3000);
+        }
+
+        // ===== SCROLL REVEAL =====
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // ===== NAVBAR SCROLL =====
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // ===== BACK TO TOP =====
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTop.classList.toggle('visible', window.scrollY > 500);
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ===== MOBILE MENU =====
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('open');
+            document.getElementById('mobileOverlay').classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
